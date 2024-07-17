@@ -9,14 +9,17 @@ uniform mat4 uModelViewMatrix;
 uniform mat4 uProjectionMatrix;
 
 uniform float uTime;
+uniform bool uWave;
 
 varying vec2 vTexCoord;
 varying vec4 vVertexColor;
 
 void main() {
   vec4 position = vec4(aPosition, 1.0);
-  position.xy += vec2(cos(uTime + position.y * INTENSITY)/INTENSITY,
-                      sin(uTime + position.x * INTENSITY) / INTENSITY); 
+  if (uWave) {
+    position.xy += vec2(cos(uTime + position.y * INTENSITY)/INTENSITY,
+                        sin(uTime + position.x * INTENSITY) / INTENSITY);
+  }
   // Apply the camera transform
   vec4 viewModelPosition = uModelViewMatrix * position;
   // Position the vertex
